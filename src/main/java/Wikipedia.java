@@ -15,21 +15,27 @@ public class Wikipedia {
 	}
 
 	public String search(String query) throws IOException {
-		String encodedUrl  = "";
-		
+		String encodedUrl = "";
+
 		try {
-		    encodedUrl = URLEncoder.encode(query, "UTF-8");
+			encodedUrl = URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException ignored) {
-		    // Can be safely ignored because UTF-8 is always supported
+			// Can be safely ignored because UTF-8 is always supported
 		}
-		URL url = new URL(makeUrl(encodedUrl));
-		searchTerm = encodedUrl;
-		URLConnection conn = url.openConnection();
-		conn.connect();
-		InputStream is = conn.getInputStream();
-		String data = convertStreamToString(is);
-		is.close();
-		return data;
+		try {
+			URL url = new URL(makeUrl(encodedUrl));
+			searchTerm = encodedUrl;
+			URLConnection conn = url.openConnection();
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			String data = convertStreamToString(is);
+			is.close();
+			return data;
+		}
+		catch (Exception e) {
+			return "Error calling Wikipedia API:\n\n" + e;
+		}
+
 	}
 
 	public String getSummary() throws IOException {
@@ -38,7 +44,7 @@ public class Wikipedia {
 
 	private boolean checkMultiples(String data) throws IOException {
 
-		if (data.contains(searchTerm+ " may refer to:")) {
+		if (data.contains(searchTerm + " may refer to:")) {
 			return true;
 		}
 		return false;

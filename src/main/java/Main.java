@@ -29,15 +29,16 @@ public class Main extends HttpServlet {
 
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		Wikipedia wiki;
 		String responseMsg;
 		String textMessage = request.getParameter("Body");
+		
+		Wikipedia wiki = new Wikipedia(textMessage);
+		Translator translator = new Translator();
 		TwiMLResponse twiml = new TwiMLResponse();
 		
-		wiki = new Wikipedia(textMessage);
 		responseMsg = wiki.getSummary();
 		
-		Message message = new Message(responseMsg);
+		Message message = new Message(translator.getLanguage(textMessage));
 		
 		try {
 			twiml.append(message);
