@@ -37,16 +37,38 @@ public class Main extends HttpServlet {
 		
 		responseMsg = wiki.getSummary(textMessage,0);
 		
-		Message message = new Message(responseMsg);
+		System.out.println("responseMsg: " + responseMsg);
 		
-		try {
-			twiml.append(message);
-		} catch (TwiMLException e) {
-			e.printStackTrace();
-		}
-
-		response.setContentType("application/xml");
-		response.getWriter().print(twiml.toXML());
+		do 
+		{
+			String msgToText;
+			Message message;
+			
+			if (responseMsg.length() >= 1599)
+			{
+				msgToText = responseMsg.substring(0, 1599);
+				responseMsg = responseMsg.substring(1599);
+			}
+			else 
+			{
+				msgToText = responseMsg;
+			}
+			
+			System.out.println("msgToText: " + msgToText);
+			
+			message = new Message(msgToText);
+			
+			try {
+				twiml.append(message);
+			} catch (TwiMLException e) {
+				e.printStackTrace();
+			}
+			
+			response.setContentType("application/xml");
+			response.getWriter().print(twiml.toXML());	
+			
+		}while (responseMsg.length() >= 1599);
+		
 	}
 
 	private void showHome(HttpServletRequest req, HttpServletResponse resp)
