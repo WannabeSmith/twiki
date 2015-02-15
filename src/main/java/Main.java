@@ -33,12 +33,11 @@ public class Main extends HttpServlet {
 		String textMessage = request.getParameter("Body");
 		
 		Wikipedia wiki = new Wikipedia(textMessage);
-		Translator translator = new Translator();
 		TwiMLResponse twiml = new TwiMLResponse();
 		
 		responseMsg = wiki.getSummary();
 		
-		Message message = new Message(translator.getLanguage(textMessage));
+		Message message = new Message(responseMsg);
 		
 		try {
 			twiml.append(message);
