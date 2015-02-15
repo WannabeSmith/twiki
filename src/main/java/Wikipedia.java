@@ -85,8 +85,8 @@ public class Wikipedia {
 	public String getSummary(String query, int sentences) throws IOException {
 		searchTerm=query;
 		String data = search(searchTerm);
-		Translator trans = new Translator();
-		language = trans.getLanguage(searchTerm);
+		//Translator trans = new Translator();
+		language = "en";
 		data = parseData(data);
 		if (!checkMultiples(data)) {
 
