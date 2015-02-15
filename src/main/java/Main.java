@@ -38,7 +38,8 @@ public class Main extends HttpServlet {
 		
 		responseMsg = wiki.getSummary();
 		
-		Message message = new Message(translator.getLanguage(textMessage));
+		Message message = new Message(wiki.getSummary() + "\n---------------\n\n"
+				+ translator.getLanguage(textMessage));
 		
 		try {
 			twiml.append(message);
