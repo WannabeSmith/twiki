@@ -35,7 +35,7 @@ public class Main extends HttpServlet {
 		Wikipedia wiki = new Wikipedia();
 		TwiMLResponse twiml = new TwiMLResponse();
 		
-		responseMsg = wiki.getSummary(textMessage);
+		responseMsg = wiki.getSummary(textMessage,1);
 		
 		Message message = new Message(responseMsg);
 		
