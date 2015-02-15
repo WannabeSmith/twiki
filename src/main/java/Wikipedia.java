@@ -8,13 +8,10 @@ import java.util.Scanner;
 
 public class Wikipedia {
 
-	private String searchTerm;
-	private String language;
+	private String searchTerm = "";
+	private String language = "en";
 
-	public Wikipedia() {
-		searchTerm = "Pi";
-		language = "en";
-	}
+	public Wikipedia() {}
 
 	public String search(String query) throws IOException {
 		String encodedUrl = "";
