@@ -9,9 +9,11 @@ import java.util.Scanner;
 public class Wikipedia {
 
 	private String searchTerm;
+	private String language;
 
 	public Wikipedia(String msg) {
 		searchTerm = msg;
+		language = "en";
 	}
 
 	public String search(String query) throws IOException {
@@ -53,6 +55,8 @@ public class Wikipedia {
 	public String getSummary(int sentences) throws IOException {
 
 		String data = search(searchTerm);
+		Translator trans = new Translator();
+		language = trans.getLanguage(searchTerm);
 		data = parseData(data);
 		if (!checkMultiples(data)) {
 
@@ -101,7 +105,10 @@ public class Wikipedia {
 	}
 
 	private String makeUrl(String name) {
-		return "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&continue=&titles="
+		if(language.contentEquals("")){
+			language = "en";
+		}
+		return "https://"+language+".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&continue=&titles="
 				+ name;
 	}
 }
