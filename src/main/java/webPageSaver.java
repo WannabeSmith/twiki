@@ -1,10 +1,5 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
@@ -14,7 +9,6 @@ public class webPageSaver {
 
 	public static void main(String args[]) throws Exception {
     	
-        OutputStream out = new FileOutputStream("test.txt");
         
         sc = new Scanner(System.in);
         String searchTerm = sc.nextLine();
@@ -24,36 +18,27 @@ public class webPageSaver {
         URLConnection conn = url.openConnection();
         conn.connect();
         InputStream is = conn.getInputStream();
-
-        copy(is, out);
-        getData("test.txt");
+        
+        String data = convertStreamToString(is);
+        getData(data);
         is.close();
-        out.close();
         sc.close();
     }
 	
-	private static void copy(InputStream from, OutputStream to) throws IOException {
-        byte[] buffer = new byte[4096];
-        while (true) {
-            int numBytes = from.read(buffer);
-            if (numBytes == -1) {
-                break;
-            }
-            to.write(buffer, 0, numBytes);
-        }
-    }
+	private static String convertStreamToString(java.io.InputStream inputstream) {
+	   Scanner s = new java.util.Scanner(inputstream).useDelimiter("\\A");
+	    return s.hasNext() ? s.next() : "";
+	}
     
     private static void getData(String file) throws IOException {
-    	BufferedReader br = new BufferedReader(new FileReader(file));
-    	String line;
-    	while ((line = br.readLine()) != null) {
-    	   int indexnum = line.indexOf("extract");
-    	   String extract = line.substring(indexnum+10, line.length()-5);
+    	
+    	   int indexnum = file.indexOf("extract");
+    	   String extract = file.substring(indexnum+10, file.length()-5);
     	   System.out.println(extract);
     	   String extractNoMarkUp = removeMarkUp(extract);
     	   System.out.println(extractNoMarkUp);
-    	}
-    	br.close();
+    	   System.out.println(getString(1,extractNoMarkUp));
+    	
     }
     
     private static String removeMarkUp(String file)  {
@@ -63,25 +48,28 @@ public class webPageSaver {
     	file = file.replace("\\", "");
 		return file;	
     }
-    private static String makeUrl(String name) {
-    	return "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="+name;
-    }
     
     private static String getString(int numString, String name)
     {
     	int k =0;
-    	int i;
-    	for ( i = 0; k < numString; i++)
+    	int index = 0;
+    	for (int i = 0; k < numString; i++)
     	{
     		if (name.charAt(i) == '.' )
     		{
     			k++;
     		}
+    		index++;
     	}
     	
-    	name = name.substring(0,i);
-		return null;
+    	name = name.substring(0,index);
+		return name;
     	
+    }
+    
+    
+    private static String makeUrl(String name) {
+    	return "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="+name;
     }
 }
 

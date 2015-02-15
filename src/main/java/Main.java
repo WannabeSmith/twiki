@@ -41,8 +41,9 @@ public class Main extends HttpServlet {
 
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		String textMessage = request.getParameter("Body");
 		TwiMLResponse twiml = new TwiMLResponse();
-		Message message = new Message(request.getParameter("Body"));
+		Message message = new Message("Response");
 		try {
 			twiml.append(message);
 		} catch (TwiMLException e) {
