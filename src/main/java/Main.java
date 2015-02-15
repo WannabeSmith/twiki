@@ -15,6 +15,7 @@ public class Main extends HttpServlet {
 	
 	public static final String ACCOUNT_SID = "PNd724ed33f48ad194e9ec4b67ce9ca55b";
 	public static final String AUTH_TOKEN = "";
+	public static final int maxTextSize = 1599;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -35,7 +36,7 @@ public class Main extends HttpServlet {
 		Wikipedia wiki = new Wikipedia();
 		TwiMLResponse twiml = new TwiMLResponse();
 		
-		responseMsg = wiki.getSummary(textMessage,0);
+		responseMsg = wiki.getSummary(textMessage, 1);
 		
 		System.out.println("responseMsg: " + responseMsg);
 		
@@ -48,10 +49,10 @@ public class Main extends HttpServlet {
 			{
 				msgToText = "No data returned";
 			}
-			else if (responseMsg.length() >= 1599)
+			else if (responseMsg.length() >= maxTextSize)//text limit is 1600 characters
 			{
-				msgToText = responseMsg.substring(0, 1599);
-				responseMsg = responseMsg.substring(1599);
+				msgToText = responseMsg.substring(0, maxTextSize);
+				responseMsg = responseMsg.substring(maxTextSize);
 			}
 			else 
 			{
@@ -71,7 +72,7 @@ public class Main extends HttpServlet {
 			response.setContentType("application/xml");
 			response.getWriter().print(twiml.toXML());	
 			
-		}while (responseMsg.length() >= 1599);
+		}while (responseMsg.length() >= maxTextSize);
 		
 	}
 
