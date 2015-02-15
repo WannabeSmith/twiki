@@ -32,10 +32,10 @@ public class Main extends HttpServlet {
 		String responseMsg;
 		String textMessage = request.getParameter("Body");
 		
-		Wikipedia wiki = new Wikipedia(textMessage);
+		Wikipedia wiki = new Wikipedia();
 		TwiMLResponse twiml = new TwiMLResponse();
 		
-		responseMsg = wiki.getSummary();
+		responseMsg = wiki.getSummary(textMessage);
 		
 		Message message = new Message(responseMsg);
 		

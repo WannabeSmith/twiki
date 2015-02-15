@@ -11,8 +11,8 @@ public class Wikipedia {
 	private String searchTerm;
 	private String language;
 
-	public Wikipedia(String msg) {
-		searchTerm = msg;
+	public Wikipedia() {
+		searchTerm = "Pi";
 		language = "en";
 	}
 
@@ -40,8 +40,8 @@ public class Wikipedia {
 
 	}
 
-	public String getSummary() throws IOException {
-		return getSummary(0);
+	public String getSummary(String query) throws IOException {
+		return getSummary(query, 0);
 	}
 
 	private boolean checkMultiples(String data) throws IOException {
@@ -52,8 +52,8 @@ public class Wikipedia {
 		return false;
 	}
 
-	public String getSummary(int sentences) throws IOException {
-
+	public String getSummary(String query, int sentences) throws IOException {
+		searchTerm=query;
 		String data = search(searchTerm);
 		Translator trans = new Translator();
 		language = trans.getLanguage(searchTerm);
