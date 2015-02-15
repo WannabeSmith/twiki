@@ -42,8 +42,9 @@ public class Main extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String textMessage = request.getParameter("Body");
+		Wikipedia wiki = new Wikipedia(textMessage);
 		TwiMLResponse twiml = new TwiMLResponse();
-		Message message = new Message("Response");
+		Message message = new Message(wiki.getSummary());
 		try {
 			twiml.append(message);
 		} catch (TwiMLException e) {

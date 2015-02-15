@@ -1,44 +1,40 @@
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
-public class webPageSaver {
-    private static Scanner sc;
-
-	public static void main(String args[]) throws Exception {
-    	
-        
-        sc = new Scanner(System.in);
-        String searchTerm = sc.nextLine();
-        
-        
-        URL url = new URL(makeUrl(searchTerm));
+public class Wikipedia {
+	
+	private static String searchTerm;
+	
+	public Wikipedia(String msg) {
+		searchTerm = msg;
+	}
+	public static String getSummary() throws IOException{
+		
+		URL url = new URL(makeUrl(searchTerm));
         URLConnection conn = url.openConnection();
         conn.connect();
         InputStream is = conn.getInputStream();
         
         String data = convertStreamToString(is);
-        getData(data);
+        data = parseData(data);
         is.close();
-        sc.close();
-    }
+        return data;
+	}
 	
 	private static String convertStreamToString(java.io.InputStream inputstream) {
 	   Scanner s = new java.util.Scanner(inputstream).useDelimiter("\\A");
 	    return s.hasNext() ? s.next() : "";
 	}
     
-    private static void getData(String file) throws IOException {
-    	
+    private static String parseData(String file) throws IOException {
     	   int indexnum = file.indexOf("extract");
     	   String extract = file.substring(indexnum+10, file.length()-5);
-    	   System.out.println(extract);
     	   String extractNoMarkUp = removeMarkUp(extract);
-    	   System.out.println(extractNoMarkUp);
-    	   System.out.println(getString(1,extractNoMarkUp));
-    	
+    	   return extractNoMarkUp;
     }
     
     private static String removeMarkUp(String file)  {
