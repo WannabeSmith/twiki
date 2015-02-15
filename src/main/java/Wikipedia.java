@@ -16,7 +16,7 @@ public class Wikipedia {
 
 	public String search(String query) throws IOException {
 		String encodedUrl = "";
-		query = toDisplayCase(query);
+		//query = toDisplayCase(query);
 		try {
 			encodedUrl = URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException ignored) {
