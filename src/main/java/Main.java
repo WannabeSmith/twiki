@@ -34,15 +34,8 @@ public class Main extends HttpServlet {
 		String textMessage = request.getParameter("Body");
 		TwiMLResponse twiml = new TwiMLResponse();
 		
-		try
-		{
-			wiki = new Wikipedia(textMessage);
-			responseMsg = wiki.getSummary();
-		}
-		catch (Exception e)
-		{
-			responseMsg = "Error getting Wikipedia data:\n\n" + e;
-		}
+		wiki = new Wikipedia(textMessage);
+		responseMsg = wiki.getSummary();
 		
 		Message message = new Message(responseMsg);
 		

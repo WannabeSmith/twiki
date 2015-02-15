@@ -15,14 +15,22 @@ public class Wikipedia {
 	public String getSummary() throws IOException{
 		
 		URL url = new URL(makeUrl(searchTerm));
-        URLConnection conn = url.openConnection();
-        conn.connect();
-        InputStream is = conn.getInputStream();
-        
-        String data = convertStreamToString(is);
-        data = parseData(data);
-        is.close();
-        return data;
+		
+		try 
+		{
+			URLConnection conn = url.openConnection();
+	        conn.connect();
+	        InputStream is = conn.getInputStream();	
+	        
+	        String data = convertStreamToString(is);
+	        data = parseData(data);
+	        is.close();
+	        return data;
+		}
+		catch (Exception e)
+		{
+			return "Error calling Wikipedia API:\n\n" + e;
+		}
 	}
 	
 	private String convertStreamToString(java.io.InputStream inputstream) {
