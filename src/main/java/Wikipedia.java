@@ -105,9 +105,7 @@ public class Wikipedia {
 	}
 
 	private String makeUrl(String name) {
-		if(language.contentEquals("")){
-			language = "en";
-		}
+		language = "en";
 		return "https://"+language+".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&continue=&titles="
 				+ name;
 	}
