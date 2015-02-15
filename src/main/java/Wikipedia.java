@@ -37,6 +37,39 @@ public class Wikipedia {
 
 	}
 
+	private static String phonetic(String name) {
+		StringBuffer strbuf = null;
+		String output;
+
+		strbuf = new StringBuffer(name);
+		int counter = 0;
+
+		for (int i = 0; i < name.length(); i++) {
+			if (name.charAt(i) == '(' && name.charAt(i + 1) == '/') {
+				counter++;
+			}
+		}
+
+		for (int m = 0; m < counter; m++) {
+			strbuf = new StringBuffer(strbuf);
+			if (strbuf.indexOf("),") + 1 > strbuf.length()) {
+				strbuf.replace(strbuf.indexOf("(/"), strbuf.indexOf("),"), "");
+			} else {
+				strbuf.replace(strbuf.indexOf("(/"), strbuf.indexOf("),") + 3,
+						"");
+			}
+		}
+		for (int m = 0; m < strbuf.length(); m++) {
+
+			if (name.charAt(m) == '\\' && name.charAt(m + 1) == 'u') {
+				strbuf.replace(m, m + 4, "");
+			}
+		}
+
+		output = strbuf.toString();
+		return output;
+	}
+
 	public String getSummary(String query) throws IOException {
 		return getSummary(query, 0);
 	}
@@ -83,6 +116,7 @@ public class Wikipedia {
 		file = file.replace("\\b", "");
 		file = file.replace("\\n", "");
 		file = file.replace("\\", "");
+		file = phonetic(file);
 		return file;
 	}
 
