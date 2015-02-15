@@ -11,11 +11,12 @@ public class Wikipedia {
 	private String searchTerm = "";
 	private String language = "en";
 
-	public Wikipedia() {}
+	public Wikipedia() {
+	}
 
 	public String search(String query) throws IOException {
 		String encodedUrl = "";
-
+		query = toDisplayCase(query);
 		try {
 			encodedUrl = URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException ignored) {
@@ -30,13 +31,29 @@ public class Wikipedia {
 			String data = convertStreamToString(is);
 			is.close();
 			return data;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return "Error calling Wikipedia API:\n\n" + e;
 		}
 
 	}
+	
+	private String toDisplayCase(String s) {
 
+	    final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
+	                                                 // to be capitalized
+
+	    StringBuilder sb = new StringBuilder();
+	    boolean capNext = true;
+
+	    for (char c : s.toCharArray()) {
+	        c = (capNext)
+	                ? Character.toUpperCase(c)
+	                : Character.toLowerCase(c);
+	        sb.append(c);
+	        capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
+	    }
+	    return sb.toString();
+	}
 	private static String phonetic(String name) {
 		StringBuffer strbuf = null;
 		String output;
@@ -69,7 +86,41 @@ public class Wikipedia {
 		output = strbuf.toString();
 		return output;
 	}
-
+	
+	private String makeList(String data) {
+		data = data.substring(searchTerm.length() + 13);
+		
+		
+		int i = 0;
+		String data2 = "";
+		int counter = 0 ;
+		while( i < data.length())
+		{
+			i = data.indexOf("\\n")+2;
+			if (i<data.indexOf(", ")){
+			data2 = data2  + data.substring(i, data.indexOf(", ")+1)+" ";
+			data = data.substring(data.indexOf(", ")+1);
+			}
+			else{
+				data=data.substring(i);
+				i = data.indexOf("\\n");
+				if (i!=-1){
+					data2 = data2  + data.substring(i, data.indexOf(", ")+1)+"\n";
+					data = data.substring(data.indexOf(", ")+1);
+				}
+				break;
+			}
+			counter++;
+			if (counter>3){
+				break;
+			}
+			
+			
+		}
+		
+		return data2;
+	}
+	
 	public String getSummary(String query) throws IOException {
 		return getSummary(query, 0);
 	}
@@ -83,20 +134,22 @@ public class Wikipedia {
 	}
 
 	public String getSummary(String query, int sentences) throws IOException {
-		searchTerm=query;
+		searchTerm = query;
 		String data = search(searchTerm);
-		//Translator trans = new Translator();
+		// Translator trans = new Translator();
 		language = "en";
-		data = parseData(data);
-		if (!checkMultiples(data)) {
 
+		int indexnum = data.indexOf("extract");
+		data = data.substring(indexnum + 10, data.length() - 5);
+		if (!checkMultiples(data)) {
+			data = parseData(data);
 			if (sentences > 0) {
 				data = getString(sentences, data);
 			}
 
 			return data;
 		}
-		return "More than one option";
+		return makeList(data);
 	}
 
 	private String convertStreamToString(java.io.InputStream inputstream) {
@@ -105,9 +158,7 @@ public class Wikipedia {
 	}
 
 	private String parseData(String file) throws IOException {
-		int indexnum = file.indexOf("extract");
-		String extract = file.substring(indexnum + 10, file.length() - 5);
-		String extractNoMarkUp = removeMarkUp(extract);
+		String extractNoMarkUp = removeMarkUp(file);
 		return extractNoMarkUp;
 	}
 
@@ -124,20 +175,25 @@ public class Wikipedia {
 		int k = 0;
 		int index = 0;
 		for (int i = 0; k < numString; i++) {
-			if (name.charAt(i) == '.') {
-				k++;
+			if (i < name.length() - 1) {
+				if (name.charAt(i) == '.') {
+					k++;
+				}
+				index++;
 			}
-			index++;
 		}
-
-		name = name.substring(0, index);
+		if (index < name.length() - 1) {
+			name = name.substring(0, index);
+		}
 		return name;
 
 	}
 
 	private String makeUrl(String name) {
 		language = "en";
-		return "https://"+language+".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&continue=&titles="
+		return "https://"
+				+ language
+				+ ".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&continue=&titles="
 				+ name;
 	}
 }
