@@ -1,14 +1,6 @@
 import com.twilio.sdk.verbs.TwiMLResponse;
 import com.twilio.sdk.verbs.TwiMLException;
 import com.twilio.sdk.verbs.Message;
-import com.twilio.sdk.TwilioRestClient;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.factory.MessageFactory;
-//import com.twilio.sdk.resource.instance.Message;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import java.util.ArrayList;
-import java.util.List;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -18,10 +10,6 @@ import org.eclipse.jetty.servlet.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
-import static javax.measure.unit.SI.KILOGRAM;
-import javax.measure.quantity.Mass;
-import org.jscience.physics.model.RelativisticModel;
-import org.jscience.physics.amount.Amount;
 
 public class Main extends HttpServlet {
 	
