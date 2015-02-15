@@ -194,6 +194,6 @@ public class Wikipedia {
 		return "https://"
 				+ language
 				+ ".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&continue=&titles="
-				+ name;
+				+ name + "&redirects";
 	}
 }
