@@ -44,7 +44,11 @@ public class Main extends HttpServlet {
 			String msgToText;
 			Message message;
 			
-			if (responseMsg.length() >= 1599)
+			if (responseMsg.length() == 0)
+			{
+				msgToText = "No data returned";
+			}
+			else if (responseMsg.length() >= 1599)
 			{
 				msgToText = responseMsg.substring(0, 1599);
 				responseMsg = responseMsg.substring(1599);
