@@ -1,8 +1,8 @@
-# Twiki
+# twiki
 
 ###Inspiration and Target Users
 
-The idea behind Twiki came to us when we were trying to create a product that had potential for positive change (aligning with the DeltaHacks theme). We wanted to make a service that allowed people to grab specific information about a topic of interest without internet access. Originally, we were going to create an SMS-based medical information service for individuals around the world who do not have the ability to talk to a doctor or access to relevant medical information, but as we began implementing the relevant code, we decided to give the users the freedom to learn about anything that interests them without the need for internet. With the millions of people on the planet who don't have the ability to learn, Twiki provides this information in an easy and accessible way.
+The idea behind twiki came to us when we were trying to create a product that had potential for positive change (aligning with the DeltaHacks theme). We wanted to make a service that allowed people to grab specific information about a topic of interest without internet access. Originally, we were going to create an SMS-based medical information service for individuals around the world who do not have the ability to talk to a doctor or access to relevant medical information, but as we began implementing the relevant code, we decided to give the users the freedom to learn about anything that interests them without the need for internet. With the millions of people on the planet who don't have the ability to learn, twiki provides this information in an easy and accessible way.
 
 ###Key Features
 
