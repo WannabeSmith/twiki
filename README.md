@@ -1,5 +1,6 @@
 # twiki
-
+![twiki.png]
+(https://raw.githubusercontent.com/WannabeSmith/deltahacks/master/res/twiki.png)
 ###Inspiration and Target Users
 
 The idea behind twiki came to us when we were trying to create a product that had potential for positive change (aligning with the DeltaHacks theme). We wanted to make a service that allowed people to grab specific information about a topic of interest without internet access. 
