@@ -15,7 +15,7 @@ With the millions of people on the planet who don't have the ability to learn, t
 
 - **Twilio**: We set up an account on Twilio which allows us to have a phone number to and from which all Wikipedia queries can be sent and received.
 - **Wikipedia**: We used the MediaWiki API for search queries.
-- **Heroku**: Our application is hosted on a Heroku server with automated Maven builds upon git push
+- **Heroku**: Our application is hosted on a Heroku server with automated Maven builds.
 
 ###Contributors
 Jay Elenis - University of Guelph, Engineering
